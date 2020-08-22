@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {useHistory} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { axiosWithAuth } from "../utils/axiosWithAuth";
 
 const Login = () => {
@@ -9,7 +9,7 @@ const Login = () => {
       password: ''
     }
   })
-  
+
   const history = useHistory()
 
   const handleLoginChanges = e => {
@@ -31,10 +31,9 @@ const Login = () => {
         history.push('/bubblepage')
       })
       .catch(err => console.log('Failed:', err))
-      // make a post request to retrieve a token from the api
-      // when you have handled the token, navigate to the BubblePage route
+    // make a post request to retrieve a token from the api
+    // when you have handled the token, navigate to the BubblePage route
   };
-
 
   return (
     <div>

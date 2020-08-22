@@ -7,7 +7,7 @@ import { fetchBubbleData as mockFetchBubbleData } from '../api/fetchBubbleData';
 
 jest.mock('../api/fetchBubbleData');
 
-const testBubbleData = [
+const mockBubbleData = [
   {
     color: "aliceblue",
     code: {
@@ -34,25 +34,23 @@ const testBubbleData = [
 test("Fetches data and renders the bubbles", async () => {
   // Finish this test
 
-  mockFetchBubbleData.mockResolvedValueOnce([testBubbleData]);
-
-  // const { getByText } = 
-  render(<BubblePage />);
-  
+  mockFetchBubbleData.mockResolvedValueOnce({ mockBubbleData, });
+  const { debug, getAllByText } = render(<BubblePage />);
   screen.debug();
 
-  const bubbleArr = await screen.findAllByTestId(/testbubblepage/i);
-  
-  
-  // waitFor(() => {
-  //   expect(getByText(/color/i)).toBeInTheDocument();
-  // });
+
+expect(getAllByText(/colors/i)).toHaveLength(3);
+  await waitFor(() => expect(mockFetchBubbleData).toHaveBeenCalledTimes(1))
+
 });
 
 
 /*
 import component
-A - render component
+ARRANGE - render component
 ACT - simulate an event
 ASSERT - run the test
 */
+
+
+//screen.findAllByTestId
