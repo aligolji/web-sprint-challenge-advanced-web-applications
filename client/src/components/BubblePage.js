@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 
 import Bubbles from "./Bubbles";
 import ColorList from "./ColorList";
-import { axiosWithAuth } from "../utils/axiosWithAuth";
+import { fetchBubbleData } from "../api/fetchBubbleData";
 
 const BubblePage = () => {
   const [colorList, setColorList] = useState([]);
@@ -11,13 +10,20 @@ const BubblePage = () => {
 
   useEffect(() => {
 
-    axiosWithAuth()
-      .get('/api/colors')
+    fetchBubbleData()
       .then(res => {
-        console.log(res);
+        console.log(res)
         setColorList(res.data);
       })
-      .catch(err => console.log('Failed to get:', err))
+      .catch(err => console.log('Failed to get data:', err));
+
+    // axiosWithAuth()
+    //   .get('/api/colors')
+    //   .then(res => {
+    //     console.log(res);
+    //     setColorList(res.data);
+    //   })
+    //   .catch(err => console.log('Failed to get data:', err));
   }, []);
 
   // fetch your colors data from the server when the component mounts
@@ -25,8 +31,16 @@ const BubblePage = () => {
 
   return (
     <>
-      <ColorList colors={colorList} updateColors={setColorList} />
-      <Bubbles colors={colorList} />
+      <div
+        className='colors-wrap' data-testid="testbubblepage"
+      >
+        <ColorList colors={colorList} updateColors={setColorList} />
+      </div>
+      <div
+        className="bubble-wrap" data-testid="testbubblepage"
+      >
+        <Bubbles colors={colorList} />
+      </div>
     </>
   );
 };

@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from 'react-router-dom';
-import axios from "axios";
+import React, { useState } from "react";
+// import { useParams } from 'react-router-dom';
 import { axiosWithAuth } from "../utils/axiosWithAuth";
 
 const initialColor = {
@@ -10,7 +9,7 @@ const initialColor = {
 
 const ColorList = ({ colors, updateColors }) => {
   console.log(colors);
-  const { id } = useParams();
+  // const { id } = useParams();
   const [editing, setEditing] = useState(false);
   const [colorToEdit, setColorToEdit] = useState(initialColor);
 
@@ -24,19 +23,11 @@ const ColorList = ({ colors, updateColors }) => {
     axiosWithAuth()
       .put(`/api/colors/${colorToEdit.id}`, colorToEdit)
       .then(res => {
-        console.log(res.data)
         console.log('UPDATE SUCCESSFUL:', res.data);
 
         updateColors([
           ...colors.filter(color => color.id !== colorToEdit.id), res.data
         ])
-        // updateColors(colors.map(color => {
-        //   if(color.id === res.id){
-        //     return res
-        //   } else {
-        //     return color
-        //   }
-        // }));
       })
       .catch(err => console.log('FAILED TO UPDATE:', err))
     // Make a put request to save your updated color
@@ -46,16 +37,17 @@ const ColorList = ({ colors, updateColors }) => {
 
   const deleteColor = color => {
     axiosWithAuth()
-    .delete(`/api/colors/${color.id}`)
-    .then(res => {
-      console.log('DELETE SUCCESSFUL:', res)
-      console.log('YOU SEE ME')
-
-    })
-    .catch()
+      .delete(`/api/colors/${color.id}`)
+      .then(res => {
+        console.log('DELETE SUCCESSFUL:', 'Deleted color with id: ' + res.data)
+        updateColors([
+          ...colors.filter(color => color.id !== res.data)
+        ])
+      })
+      .catch()
     // make a delete request to delete this color
   };
-  
+
 
   return (
     <div className="colors-wrap">
