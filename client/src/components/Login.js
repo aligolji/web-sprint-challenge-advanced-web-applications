@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {useHistory} from 'react-router-dom';
 import Axios from "axios";
 import { axiosWithAuth } from "../utils/axiosWithAuth";
 
@@ -9,6 +10,8 @@ const Login = () => {
       password: ''
     }
   })
+  
+  const history = useHistory()
 
   const handleLoginChanges = e => {
     setLogin({
@@ -26,10 +29,9 @@ const Login = () => {
       .then(res => {
         console.log(res);
         localStorage.setItem('token', res.data.payload)
-        //create route to BubblePage??
-        
+        history.push('/bubblepage')
       })
-      .catch(err => console.error('Failed:', err))
+      .catch(err => console.log('Failed:', err))
   }
 
 

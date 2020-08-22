@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from 'react-router-dom';
 import axios from "axios";
+import { axiosWithAuth } from "../utils/axiosWithAuth";
 
 const initialColor = {
   color: "",
@@ -8,6 +10,7 @@ const initialColor = {
 
 const ColorList = ({ colors, updateColors }) => {
   console.log(colors);
+  const { id } = useParams();
   const [editing, setEditing] = useState(false);
   const [colorToEdit, setColorToEdit] = useState(initialColor);
 
@@ -18,14 +21,41 @@ const ColorList = ({ colors, updateColors }) => {
 
   const saveEdit = e => {
     e.preventDefault();
+    axiosWithAuth()
+      .put(`/api/colors/${colorToEdit.id}`, colorToEdit)
+      .then(res => {
+        console.log(res.data)
+        console.log('UPDATE SUCCESSFUL:', res.data);
+
+        updateColors([
+          ...colors.filter(color => color.id !== colorToEdit.id), res.data
+        ])
+        // updateColors(colors.map(color => {
+        //   if(color.id === res.id){
+        //     return res
+        //   } else {
+        //     return color
+        //   }
+        // }));
+      })
+      .catch(err => console.log('FAILED TO UPDATE:', err))
     // Make a put request to save your updated color
     // think about where will you get the id from...
     // where is it saved right now?
   };
 
   const deleteColor = color => {
+    axiosWithAuth()
+    .delete(`/api/colors/${color.id}`)
+    .then(res => {
+      console.log('DELETE SUCCESSFUL:', res)
+      console.log('YOU SEE ME')
+
+    })
+    .catch()
     // make a delete request to delete this color
   };
+  
 
   return (
     <div className="colors-wrap">
@@ -35,11 +65,11 @@ const ColorList = ({ colors, updateColors }) => {
           <li key={color.color} onClick={() => editColor(color)}>
             <span>
               <span className="delete" onClick={e => {
-                    e.stopPropagation();
-                    deleteColor(color)
-                  }
-                }>
-                  x
+                e.stopPropagation();
+                deleteColor(color)
+              }
+              }>
+                x
               </span>{" "}
               {color.color}
             </span>
