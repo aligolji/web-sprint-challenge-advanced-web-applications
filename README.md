@@ -27,10 +27,24 @@ Commit your code regularly and meaningfully. This helps both you (in case you ev
 
 Be prepared to demonstrate your understanding of this week's concepts by answering questions on the following topics. You might prepare by writing down your own answers before hand.
 
+✅///////////////////////////////////////////
+
 1. Explain what a token is used for.
+        >>>A token is used to prove authentication that a user has correct login credentials to access data.
+
 2. What steps can you take in your web apps to keep your data secure?
+        >>>Setting up for authentication tokens for an app is one key step. Other steps include setting up private and secure routes to components in the app that will only allow access once authenticated.
+
 3. Describe how web servers work.
+        >>>Web servers host website/app code to serve out to users upon request using web server software. Code files are stored on computers located at server sites accross the world. When a user browses to a website, a request is sent over the worldwide network to the server hosting code for that particular site, then the server sends data back to the client computer and the data is rendered to the user's web browser.
+
 4. Which HTTP methods can be mapped to the CRUD acronym that we use when interfacing with APIs/Servers.
+        >>>.POST can be mapped to the 'C'. A .POST request allows for submitting new data to the server. Also, can submit credentials to retrieve an authentication 'token' to add to the header of all other requests
+        >>>.GET can be mapped to the 'R'. A .GET request allows user to 'read' / retrieve data from the server.
+        >>>.PUT can be mapped to the 'U'. A .PUT request is used for submitting updates to data on the server.
+        >>>.DELETE can be mapped to the 'D'. A .DELETE request is used to submit request to delete data from the server.
+
+✅///////////////////////////////////////////
 
 You are expected to be able to answer questions in these areas. Your responses contribute to your Sprint Challenge grade. 
 
